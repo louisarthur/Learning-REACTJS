@@ -40,13 +40,27 @@ class TechList extends Component {
     this.state.newTech = '';
     console.log(this.state);
   };
+
+  handleDelete = tech => {
+    this.setState({ techs: this.state.techs.filter(t => t !== tech) });
+  };
   render() {
     return (
       <>
         <form onSubmit={this.handleSubmit}>
           <ul>
             {this.state.techs.map(tech => (
-              <li key={tech}>{tech}</li>
+              <li key={tech}>
+                {tech}
+                {/* quando se renderiza a tela, o handledelete já iria deletar todos os elementos,
+                para ele não fazer isso, colocaremos uma pré-function para ele executar somente, quando
+                o botão for acionado. */}
+                {/* ok, essa parte me bugou um pouco, mas tenho que entender como ao pressionar o button,
+                o react reconheceu o tipo da tecnologia. */}
+                <button onClick={() => this.handleDelete(tech)} type="button">
+                  Remover
+                </button>
+              </li>
             ))}
           </ul>
           <input
