@@ -44,6 +44,9 @@ class TechList extends Component {
   handleDelete = tech => {
     this.setState({ techs: this.state.techs.filter(t => t !== tech) });
   };
+  handleDeletePerName = name => {
+    this.setState({ techs: this.state.techs.filter(t => t !== name) });
+  };
   render() {
     return (
       <>
@@ -69,6 +72,12 @@ class TechList extends Component {
             value={this.state.newTech}
           />
           <button type="submit">Envie</button>
+          <button
+            type="button"
+            onClick={() => this.handleDeletePerName(this.state.newTech)}
+          >
+            Delete
+          </button>
         </form>
       </>
     );
