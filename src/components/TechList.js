@@ -11,7 +11,7 @@ class TechList extends Component {
   state = {
     // é criado um novo estado, pois não consegue-se adicionar diretamente ao estado techs, do jeito que está.
     newTech: '',
-    techs: ['React', 'Node', 'React-Native', 'Redux', 'Total-React']
+    techs: []
   };
   //o estado do componente obrigatóriamente tem que ter esse nome state.
   //para funcionar o state supracitado, preciso instalar o plugin do babel
@@ -21,6 +21,27 @@ class TechList extends Component {
   // para conseguir retornar mais de uma tag html, separada.
   // o react só adiciona dois ou mais elementos html utilizando um container, esse fragment é
   // um tipo de container, só que generico.
+
+  //Executado assim que o componente aparece em tela.
+  componentDidMount() {
+    //capta todos os techs
+    const techs = localStorage.getItem('techs');
+    //  se for true, ele adiciona ao estado, os techs.
+    if (techs) {
+      this.setState({ techs: JSON.parse(techs) });
+    }
+  }
+  // Executado sempre que houver alterações nas props ou no estado.
+  componentDidUpdate(prevProps, prevState) {
+    //se o próximo estado de techs for diferente do atual, adicione
+    //itens no localstorage do navegador em formado de json, pois
+    // Não aceita array
+    if (prevState.techs !== this.state.techs) {
+      localStorage.setItem('techs', JSON.stringify(this.state.techs));
+    }
+  }
+  // o menos utilizado, Executado quando o componente deixa de existir.
+  componentWillUnmount() {}
 
   //não se muda o state, portanto é necessário fazer algumas estratégias, para adicionar elementos
   handleInputChange = k => {
@@ -62,7 +83,6 @@ class TechList extends Component {
                 onDelete={() => this.handleDelete(tech)}
               />
             ))}
-            <TechItem />
           </ul>
           <input
             type="text"
