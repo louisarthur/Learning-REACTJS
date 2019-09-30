@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import TechItem from './TechItem';
 // vimos a criação de um component através de função, agora iremos através de classe, criar
 //um novo component, futuramente usaremos por função
 
@@ -52,19 +53,16 @@ class TechList extends Component {
       <>
         <form onSubmit={this.handleSubmit}>
           <ul>
+            {/* outro conceito interessante é o de propriedades, para enviar uma propriedade,
+            para a modulo TechItem, podemos fazer a seguinte coisa, logo após o key utilizaremos o "enviador" */}
             {this.state.techs.map(tech => (
-              <li key={tech}>
-                {tech}
-                {/* quando se renderiza a tela, o handledelete já iria deletar todos os elementos,
-                para ele não fazer isso, colocaremos uma pré-function para ele executar somente, quando
-                o botão for acionado. */}
-                {/* ok, essa parte me bugou um pouco, mas tenho que entender como ao pressionar o button,
-                o react reconheceu o tipo da tecnologia. */}
-                <button onClick={() => this.handleDelete(tech)} type="button">
-                  Remover
-                </button>
-              </li>
+              <TechItem
+                key={tech}
+                tech={tech}
+                onDelete={() => this.handleDelete(tech)}
+              />
             ))}
+            <TechItem />
           </ul>
           <input
             type="text"
